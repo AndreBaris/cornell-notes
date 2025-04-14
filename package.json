@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -40,6 +42,7 @@
     "eslint": "^9.22.0",
     "eslint-plugin-cypress": "^4.2.0",
     "eslint-plugin-vue": "~10.0.0",
+    "gh-pages": "^6.3.0",
     "jiti": "^2.4.2",
     "jsdom": "^26.0.0",
     "npm-run-all2": "^7.0.2",
