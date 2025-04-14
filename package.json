@@ -1,8 +1,9 @@
 {
-  "name": "cornell-notes-vue",
-  "version": "0.0.0",
+  "name": "cornell-notes",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
+  "homepage": "https://AndreBaris.github.io/",
   "scripts": {
     "dev": "vite",
     "predeploy": "yarn build",
