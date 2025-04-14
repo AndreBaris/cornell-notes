@@ -12,7 +12,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  base: 'https://github.com/AndreBaris/cornell-notes',
+  base: '/cornell-notes/',
   server: {
     cors: {
       origin: true,
