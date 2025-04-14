@@ -14,6 +14,9 @@ export default defineConfig({
   },
   base: 'https://github.com/AndreBaris/cornell-notes',
   server: {
-    cors: true,
+    cors: {
+      origin: true,
+      credentials: true,
+    },
   },
 })
