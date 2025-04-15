@@ -59,7 +59,9 @@
       </Dialog>
       <Dialog :style="{ width: '50rem' }" modal v-model:visible="pdfVisible">
         <PdfViewer :style="{ display: pdfDisplay }"></PdfViewer>
-        <Button label="Download" @click="exportPDF()"></Button>
+        <div style="display: flex; flex-direction: column">
+          <Button style="justify-self: center" label="Download" @click="exportPDF()"></Button>
+        </div>
       </Dialog>
     </div>
   </div>
