@@ -10,24 +10,21 @@ function getPageNote(event: Event) {
 }
 </script>
 <template>
-  <Textarea
-    @input="getPageNote($event)"
-    v-model="selectedPage!.notes"
-    class="editable-area"
-    id="notes-area"
-    placeholder="Escreva suas anotações aqui..."
-  ></Textarea>
+  <FloatLabel class="container-editable-area" variant="on">
+    <Textarea
+      @input="getPageNote($event)"
+      v-model="selectedPage!.notes"
+      class="editable-area"
+      id="notes-area"
+    />
+    <label for="notes-area">Escreva suas anotações aqui...</label>
+  </FloatLabel>
 </template>
 <style>
 @media (max-width: 768px) {
   .editable-area {
     height: 100%;
     width: 100%;
-    resize: none;
-    border: none;
-    outline: none;
-    padding: 10px;
-    font-size: 16px;
   }
 }
 </style>

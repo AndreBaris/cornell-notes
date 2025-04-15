@@ -10,11 +10,13 @@ function updatePageCue(event: Event) {
 }
 </script>
 <template>
-  <Textarea
-    @input="updatePageCue($event)"
-    v-model="selectedPage!.cues"
-    class="editable-area"
-    id="cue-area"
-    placeholder="Palavras-chave, perguntas principais ou dicas..."
-  />
+  <FloatLabel class="container-editable-area" variant="on">
+    <Textarea
+      @input="updatePageCue($event)"
+      v-model="selectedPage!.cues"
+      class="editable-area"
+      id="cue-column"
+    />
+    <label for="cue-column">Palavras-chave, perguntas principais ou dicas...</label>
+  </FloatLabel>
 </template>

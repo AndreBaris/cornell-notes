@@ -1,11 +1,3 @@
-<template>
-  <Textarea
-    placeholder="Escreva um resumo das suas anotações..."
-    class="editable-area"
-    v-model="selectedPage!.summary"
-    @input="getPageSummary($event)"
-  ></Textarea>
-</template>
 <script setup lang="ts">
 import { pageStore } from '@/stores/pages'
 import { storeToRefs } from 'pinia'
@@ -17,3 +9,14 @@ function getPageSummary(event: Event) {
   pagesStore.updatePage(selectedPage.value!)
 }
 </script>
+<template>
+  <FloatLabel class="container-editable-area" variant="on">
+    <Textarea
+      class="editable-area"
+      id="summary-area"
+      v-model="selectedPage!.summary"
+      @input="getPageSummary($event)"
+    ></Textarea>
+    <label for="summary-area">Escreva um resumo das suas anotações...</label>
+  </FloatLabel>
+</template>

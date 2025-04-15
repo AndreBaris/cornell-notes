@@ -4,10 +4,48 @@ import NoteColumn from './areas/NoteColumn.vue'
 import SummaryArea from './areas/SummaryRow.vue'
 import NoteTitle from './areas/NoteTitle.vue'
 import BlockUI from 'primevue/blockui'
-const pagesStore = pageStore()
 import { pageStore } from '@/stores/pages'
+const pagesStore = pageStore()
 </script>
-
+<template>
+  <div class="note-area">
+    <BlockUI ref="blockUi" v-bind:blocked="pagesStore.disablePage">
+      <NoteTitle></NoteTitle>
+    </BlockUI>
+    <Divider></Divider>
+    <div class="cornell-note">
+      <div class="cornell-top">
+        <div class="cue-column">
+          <BlockUI
+            class="container-editable-area"
+            ref="blockUi"
+            v-bind:blocked="pagesStore.disablePage"
+          >
+            <CueColumn></CueColumn>
+          </BlockUI>
+        </div>
+        <div class="notes-column">
+          <BlockUI
+            class="container-editable-area"
+            ref="blockUi"
+            v-bind:blocked="pagesStore.disablePage"
+          >
+            <NoteColumn></NoteColumn>
+          </BlockUI>
+        </div>
+      </div>
+      <div class="summary-section">
+        <BlockUI
+          class="container-editable-area"
+          ref="blockUi"
+          v-bind:blocked="pagesStore.disablePage"
+        >
+          <SummaryArea></SummaryArea>
+        </BlockUI>
+      </div>
+    </div>
+  </div>
+</template>
 <style>
 .note-area {
   flex-grow: 1;
@@ -85,33 +123,3 @@ import { pageStore } from '@/stores/pages'
   }
 }
 </style>
-<template>
-  <div class="note-area">
-    <BlockUI ref="blockUi" v-bind:blocked="pagesStore.disablePage">
-      <NoteTitle></NoteTitle>
-    </BlockUI>
-    <Divider></Divider>
-    <div class="cornell-note">
-      <div class="cornell-top">
-        <div class="cue-column">
-          <h3 class="section-header">Palavras-chave / Pergunta</h3>
-          <BlockUI class="editable-area" ref="blockUi" v-bind:blocked="pagesStore.disablePage">
-            <CueColumn></CueColumn>
-          </BlockUI>
-        </div>
-        <div class="notes-column">
-          <h3 class="section-header">Notas</h3>
-          <BlockUI class="editable-area" ref="blockUi" v-bind:blocked="pagesStore.disablePage">
-            <NoteColumn></NoteColumn>
-          </BlockUI>
-        </div>
-      </div>
-      <div class="summary-section">
-        <h3 class="section-header">Resumo</h3>
-        <BlockUI class="editable-area" ref="blockUi" v-bind:blocked="pagesStore.disablePage">
-          <SummaryArea></SummaryArea>
-        </BlockUI>
-      </div>
-    </div>
-  </div>
-</template>

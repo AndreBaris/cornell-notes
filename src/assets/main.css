@@ -10,11 +10,15 @@ body {
   padding: 20px;
 }
 
-.editable-area {
+.container-editable-area {
   width: 100%;
   height: 100%;
-  border: 1px solid #ddd;
   border-radius: 4px;
   resize: none;
   outline: none;
+}
+.editable-area {
+  width: 100%;
+  height: 100%;
+  resize: none;
 }
