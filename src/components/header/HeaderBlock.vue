@@ -49,7 +49,17 @@
             label="Json"
             @click="downloadNotes('json')"
           ></Button>
+          <Button
+            severity="primary"
+            type="button"
+            label="PDF"
+            @click="downloadNotes('pdf')"
+          ></Button>
         </ButtonGroup>
+      </Dialog>
+      <Dialog :style="{ width: '50rem' }" modal v-model:visible="pdfVisible">
+        <PdfViewer :style="{ display: pdfDisplay }"></PdfViewer>
+        <Button label="Download" @click="exportPDF()"></Button>
       </Dialog>
     </div>
   </div>
@@ -57,23 +67,51 @@
 <script setup lang="ts">
 import { useConfirm } from 'primevue/useconfirm'
 import FileSaver from 'file-saver'
+import html2pdf from 'html2pdf.js'
 import { pageStore } from '@/stores/pages'
 import { ref } from 'vue'
 import { Button, ButtonGroup, Dialog } from 'primevue'
 import ConfirmPopup from 'primevue/confirmpopup'
+import PdfViewer from '../html2pdf/PdfViewer.vue'
 // import { storeToRefs } from 'pinia'
 const pagesStore = pageStore()
 const visible = ref(false)
+const pdfVisible = ref(false)
+let pdfDisplay = 'none'
+function exportPDF() {
+  const element = document.getElementById('pdfRef')
+  html2pdf()
+    .from(element)
+    .set({
+      filename: `${pagesStore.selectedPage?.name}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 10 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    })
+    .save()
+  pdfVisible.value = false
+  pdfDisplay = 'none'
+}
 function downloadNotes(type: string) {
   const exportedPage = pagesStore.selectedPage
-  if (type === 'txt') {
-    const text = ` Titulo: ${exportedPage?.name}\n\n Palavras-chave / Pergunta: ${exportedPage?.cues}\n\n Resumo: ${exportedPage?.notes}\n\n Notas: ${exportedPage?.notes}\n\n`
-    const blob = new Blob([text], { type: 'text/plain' })
-    FileSaver.saveAs(blob, 'notes.txt')
-  } else if (type === 'json') {
-    const blob = new Blob([JSON.stringify({ exportedPage })], { type: 'application/json' })
-    FileSaver.saveAs(blob, 'notes.json')
+  let blob = new Blob()
+  switch (type) {
+    case 'json':
+      blob = new Blob([JSON.stringify({ exportedPage })], { type: 'application/json' })
+      FileSaver.saveAs(blob, 'notes.json')
+      break
+    case 'txt':
+      const text = ` Titulo: ${exportedPage?.name}\n\n Palavras-chave / Pergunta: ${exportedPage?.cues}\n\n Resumo: ${exportedPage?.notes}\n\n Notas: ${exportedPage?.notes}\n\n`
+      blob = new Blob([text], { type: 'text/plain' })
+      FileSaver.saveAs(blob, 'notes.txt')
+      break
+    case 'pdf':
+      pdfVisible.value = true
+      pdfDisplay = ''
+    default:
+      break
   }
+
   visible.value = false
 }
 const confirm = useConfirm()
