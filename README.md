@@ -4,6 +4,7 @@ A simple note App that use the Cornell Methods. Ideal for students.
 
 ### TODO
 
+- Add cookies and ToS
 - Melhorar responsividade para diversos aparelhos
 - Possibilidade de importar notas
 - Implementar acesso com Auth
