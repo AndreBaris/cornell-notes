@@ -2,8 +2,21 @@
   <div class="header">
     <h1>Anotações Cornell</h1>
     <div class="card flex justify-center">
+      <ToggleSwitch @click="pagesStore.toggleDarkMode()" v-model="pagesStore.isDarkModeSelected">
+        <template #handle="{ checked }">
+          <i :class="['!text-xs pi', { 'pi-sun': checked, 'pi-moon': !checked }]" />
+        </template>
+      </ToggleSwitch>
+    </div>
+    <div class="card flex justify-center">
       <ConfirmPopup></ConfirmPopup>
+      <div class="card flex justify-center"></div>
       <ButtonGroup class="file-actions">
+        <!-- <ColorPicker
+          format="hex"
+          @change="updatePageColor($event)"
+          :v-model="selectedPage!.backgroundColor"
+        /> -->
         <Button
           :disabled="pagesStore.disablePage"
           @click="visible = true"
@@ -23,7 +36,7 @@
         header="Qual formato você gostaria de exportar?"
         :style="{ width: '25rem' }"
       >
-        <div class="card flex justify-center gap-4">
+        <ButtonGroup class="file-actions">
           <Button
             type="button"
             label="TXT"
@@ -36,7 +49,7 @@
             label="Json"
             @click="downloadNotes('json')"
           ></Button>
-        </div>
+        </ButtonGroup>
       </Dialog>
     </div>
   </div>
@@ -48,6 +61,7 @@ import { pageStore } from '@/stores/pages'
 import { ref } from 'vue'
 import { Button, ButtonGroup, Dialog } from 'primevue'
 import ConfirmPopup from 'primevue/confirmpopup'
+// import { storeToRefs } from 'pinia'
 const pagesStore = pageStore()
 const visible = ref(false)
 function downloadNotes(type: string) {
@@ -70,11 +84,11 @@ const confirmDelete = (event: Event) => {
     icon: 'pi pi-exclamation-triangle',
     rejectProps: {
       label: 'Cancelar',
-      severity: 'secondary',
       outlined: true,
     },
     acceptProps: {
       label: 'Sim',
+      severity: 'danger',
     },
     accept: () => {
       pagesStore.removeSelectedPage()
@@ -84,6 +98,14 @@ const confirmDelete = (event: Event) => {
     },
   })
 }
+
+// const { selectedPage } = storeToRefs(pagesStore)
+// function updatePageColor(event: ColorPickerChangeEvent) {
+//   if (selectedPage.value) {
+//     selectedPage.value.backgroundColor = event.value
+//   }
+//   pagesStore.updatePage(selectedPage.value!)
+// }
 </script>
 <style scoped>
 .header {
@@ -100,12 +122,18 @@ const confirmDelete = (event: Event) => {
 .file-actions {
   display: flex;
   gap: 10px;
+  justify-self: flex-end;
 }
 
 @media (max-width: 768px) {
   .file-actions {
     flex-direction: column;
     gap: 5px;
+  }
+  .header {
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 3px;
   }
 }
 </style>

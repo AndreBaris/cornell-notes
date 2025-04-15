@@ -6,9 +6,11 @@ interface Page {
   notes: string
   summary: string
   createdAt: string
+  backgroundColor: string
 }
 export const pageStore = defineStore('pages', {
   state: () => ({
+    isDarkModeSelected: true,
     disablePage: false,
     pages: [
       {
@@ -17,6 +19,7 @@ export const pageStore = defineStore('pages', {
         cues: '',
         notes: '',
         summary: '',
+        backgroundColor: '',
         createdAt: new Date().toISOString(),
       },
     ] as Page[],
@@ -26,10 +29,14 @@ export const pageStore = defineStore('pages', {
       cues: '',
       notes: '',
       summary: '',
+      backgroundColor: '',
       createdAt: new Date().toISOString(),
     } as Page | null,
   }),
   getters: {
+    getThemeMode: (state) => {
+      return state.isDarkModeSelected
+    },
     getPageState: (state) => {
       return state.disablePage
     },
@@ -57,6 +64,7 @@ export const pageStore = defineStore('pages', {
         cues: '',
         notes: '',
         summary: '',
+        backgroundColor: '',
         createdAt: new Date().toISOString(),
       }
       this.selectedPage = page
@@ -103,6 +111,15 @@ export const pageStore = defineStore('pages', {
       if (pages) {
         this.pages = JSON.parse(pages)
       }
+    },
+    updateItemColor(newColor: string) {
+      if (this.selectedPage) {
+        this.selectedPage.backgroundColor = newColor
+      }
+    },
+    toggleDarkMode() {
+      localStorage.setItem('darkMode', JSON.stringify(this.isDarkModeSelected))
+      document.documentElement.classList.toggle('my-app-dark')
     },
   },
 })

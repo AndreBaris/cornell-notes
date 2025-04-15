@@ -31,8 +31,17 @@ const checkPageLength = () => (pagesStore.pages.length <= 1 ? true : false)
       :options="pagesStore.getPages"
       optionLabel="name"
       checkmark
-      class="w-full md:w-56"
-    />
+      scrollHeight="47.7rem"
+    >
+      <!-- <template #option="slotProps">
+        <div
+          :style="{
+            backgroundColor: '#' + slotProps.option.backgroundColor,
+          }"
+        >
+          {{ slotProps.option.name }}
+        </div>
+      </template> -->
+    </Listbox>
   </div>
 </template>
-<style scoped></style>
